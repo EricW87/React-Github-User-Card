@@ -52,13 +52,13 @@ class App extends React.Component {
 
   render() {
     if(this.state.userName === "")
-      return <div className="App"><GetUser userName= {this.state.userName} setName={this.setName}/></div>
+      return <div className="getuser"><GetUser userName={this.state.userName} setName={this.setName}/></div>
 
     return (
-      <div className="App">
-        <GetUser userName= {this.state.userName} setName={this.setName}/>
-        <h1>User Profile</h1>
-        <UserCard data={this.state.data}/>
+      <div>
+        <GetUser userName={this.state.userName} setName={this.setName}/>
+        <h1>{this.state.userName}'s Profile</h1>
+        <UserCard user={true} data={this.state.data}/>
         <h1>{this.state.userName}'s Followers</h1>
         <UserList followers={this.state.followers_data}/>
       </div>

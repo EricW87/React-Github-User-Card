@@ -1,17 +1,15 @@
 import React from 'react';
+import UserCard from './UserCard';
 
 const UserList = props => {
     if(!props.followers || props.followers.length === 0)
         return <div>No followers found</div>;
 
     return (
-        <div>
+        <div className="followers">
             {props.followers.map((follower) => {
                 return (
-                    <div className="follower">
-                        <img src={follower.avatar_url}/>
-                        <h3><a href={follower.html_url}>{follower.login}</a></h3>
-                    </div>
+                    <UserCard key={follower.id} user={false} data={follower} />
                 );
             })}
         </div>
