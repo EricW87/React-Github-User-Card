@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import GetUser from './Components/GetUser';
 import UserList from './Components/UserList';
 import UserCard from './Components/UserCard';
@@ -8,23 +8,30 @@ import './App.css';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { userName: "", data: null, followers_data: null };
+    this.state = { userName: "", data: null, followers_data: null, stop: true };
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount")
+    this.setName("EricW87");
+  }
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+    console.log(this.state.stop);
+    if(!this.state.stop) //prevent infinite loop
+      this.downloadUser();
   }
 
   setName = name => {
-    this.setState({ userName: name, data: null, followers_data: null }, () => this.downloadUser());
+    this.setState({ userName: name, data: null, followers_data: null, stop: false });
   }
 
   downloadUser = () => {
-    axios
-      .get(`https://api.github.com/users/${this.state.userName}`)
-      .then( res => {
-        this.setState({ 
-          userName: this.state.userName,
-          data: res.data,
-          followers_data: null
-        }, () => this.downloadFollowers());
-        console.log(this.state.data);
+    fetch(`https://api.github.com/users/${this.state.userName}`)
+      .then( res => res.json())
+      .then( user => {
+        this.downloadFollowers(user);
       })
       .catch( err => {
         console.log(`Error in downloadUser: ${err}`)
@@ -32,20 +39,20 @@ class App extends React.Component {
       });
   }
 
-  downloadFollowers = () => {
-    axios
-      .get(this.state.data.followers_url)
-      .then( res => {
+  downloadFollowers = (user) => {
+    fetch(user.followers_url)
+      .then( res => res.json())
+      .then( followers => {
+        console.log(followers)
         this.setState({ 
           userName: this.state.userName,
-          data: this.state.data,
-          followers_data: res.data
+          data: user,
+          followers_data: followers,
+          stop: true
         });
-        console.log(this.state.followers_data);
       })
       .catch( err => {
         console.log(`Error in downloadFollowers: ${err}`)
-
       });
   }
 

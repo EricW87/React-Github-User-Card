@@ -2,6 +2,9 @@ import React from 'react';
 import UserCard from './UserCard';
 
 const UserList = props => {
+
+    if(props.followers)
+        console.log(props.followers, props.followers.length )
     if(!props.followers || props.followers.length === 0)
         return <div>No followers found</div>;
 
