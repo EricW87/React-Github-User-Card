@@ -1,0 +1,42 @@
+h1 {
+  text-align: center;
+}
+
+.getuser {
+  text-align: center;
+}
+
+.user {
+  width: 40%;
+  margin: 0 auto;
+  text-align: center;
+  background: violet;
+  padding: 1%;
+  font-size: 2.5em;
+}
+
+.profile {
+  width: 25%;
+  background: darkgrey;
+  text-align: center;
+}
+
+.profile img {
+  padding: auto auto;
+  width: 75%;
+}
+
+.profile p, .profile a {
+  font-size: 2em;
+  text-decoration: none;
+}
+
+.profile:nth-child(2n) {
+  background: grey;
+} 
+.followers {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
